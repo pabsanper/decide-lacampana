@@ -7,12 +7,13 @@ jobs:
     strategy:
         matrix:
             pyversion: ['3.5','3.8']
+            pgversion: ['10.8','12']
 
     runs-on: ubuntu-latest
 
     services:
       postgres:
-        image: postgres:10.8
+        image: postgres:${{matrix.pgversion}}
         env:
           POSTGRES_USER: decide
           POSTGRES_PASSWORD: decide
@@ -25,7 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{matrix.pyversion}}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{matrix.pyversion}}
     - name: psycopg2 prerequisites
